@@ -11,8 +11,8 @@ function toBasicAuthHeader(username, password) {
 }
 
 export function AuthProvider({ children }) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState(localStorage.getItem("username") || "")
+  const [password, setPassword] = useState(localStorage.getItem("password") || "")
   const [role, setRole] = useState(null) // 'ROLE_USER' | 'ROLE_ADMIN' | null
   const [status, setStatus] = useState('anonymous') // anonymous | authenticating | authenticated
 
@@ -24,6 +24,8 @@ export function AuthProvider({ children }) {
 
   const login = async ({ username: u, password: p }) => {
     setStatus('authenticating')
+    localStorage.setItem("username", u)
+    localStorage.setItem("password", p)
     setUsername(u)
     setPassword(p)
     setRole(null)
@@ -61,6 +63,8 @@ export function AuthProvider({ children }) {
   }
 
   const logout = () => {
+      localStorage.removeItem("username")
+      localStorage.removeItem("password")
     setUsername('')
     setPassword('')
     setRole(null)

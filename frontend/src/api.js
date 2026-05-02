@@ -19,15 +19,15 @@ import axios from 'axios'
 
 export function createApiClient({ getAuthHeader }) {
   const client = axios.create({
-    baseURL: '/api',
+    baseURL: 'https://hirely-backend-ai42.onrender.com',
     headers: { 'Content-Type': 'application/json' },
-  })
+  });
 
   client.interceptors.request.use((config) => {
-    const auth = getAuthHeader?.()
-    if (auth) config.headers.Authorization = auth
-    return config
-  })
+    const auth = getAuthHeader?.();
+    if (auth) config.headers.Authorization = auth;
+    return config;
+  });
 
   return {
     register: async ({ username, password }) => {
