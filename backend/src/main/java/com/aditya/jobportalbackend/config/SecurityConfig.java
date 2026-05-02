@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .csrf(customizer -> customizer.disable())
                 .userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Admin APIs
                         .requestMatchers(HttpMethod.POST, "/jobs").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/jobs/*").hasRole("ADMIN")
